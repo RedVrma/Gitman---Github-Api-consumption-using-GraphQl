@@ -1,0 +1,22 @@
+query SearchUsers($q: String!) {
+    search(query: $q, type: USER, first: 20) {
+        edges {
+            node {
+                ... on User {
+                    avatarUrl
+                    id
+                    login
+                    url
+                    name
+                    bio
+                    followers{
+                        totalCount
+                    }
+                    following{
+                        totalCount
+                    }
+                }
+            }
+        }
+    }
+}
