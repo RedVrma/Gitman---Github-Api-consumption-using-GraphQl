@@ -1,5 +1,5 @@
-query SearchUsers($q: String!) {
-    search(query: $q, type: USER, first: 20) {
+query SearchUsers($q: String!,$after: String) {
+    search(query: $q, type: USER, first: 2,after:$after) {
         edges {
             node {
                 ... on User {
@@ -17,6 +17,10 @@ query SearchUsers($q: String!) {
                     }
                 }
             }
+        }
+        pageInfo{
+            endCursor
+            hasNextPage
         }
     }
 }

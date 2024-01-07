@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/github_user"
         >
 
         <ImageView
@@ -55,6 +56,7 @@
             android:layout_height="wrap_content"
             android:text="Red programming language organization"
             android:textSize="14sp"
+            android:maxLines="2"
             app:layout_constraintTop_toBottomOf="@id/nameTextView"
             app:layout_constraintLeft_toLeftOf="@id/nameTextView"
             />
