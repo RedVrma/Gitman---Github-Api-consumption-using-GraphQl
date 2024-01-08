@@ -8,7 +8,7 @@
  Pagination
 
  Usage:
- Add you personal github token in appolo client, after that it should work as expected.
+ Add you personal github token in apollo client, after that it should work as expected.
 
  
  
