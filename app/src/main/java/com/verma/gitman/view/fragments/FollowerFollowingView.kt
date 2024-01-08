@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -24,6 +26,7 @@ private const val ARG_PARAM2 = "param2"
 class FollowerFollowingView : Fragment() {
     private lateinit var viewPager: ViewPager2
     private lateinit var tabLayout: TabLayout
+    private lateinit var backButton: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +37,7 @@ class FollowerFollowingView : Fragment() {
 
         viewPager = view.findViewById(R.id.viewPager)
         tabLayout = view.findViewById(R.id.tabLayout)
+        backButton = view.findViewById(R.id.backButton)
 
         val receivedUsername = arguments?.getString("login")
 
@@ -51,6 +55,10 @@ class FollowerFollowingView : Fragment() {
                 1 -> tab.text = "Following"
             }
         }.attach()
+
+        backButton.setOnClickListener{
+            findNavController().popBackStack()
+        }
 
         return view
     }

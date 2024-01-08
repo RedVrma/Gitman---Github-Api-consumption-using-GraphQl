@@ -41,6 +41,7 @@ class ProfileView : Fragment() {
         val loginTextView: TextView = view.findViewById(R.id.loginTextView)
         val nameTextView: TextView = view.findViewById(R.id.nameTextView)
         val bioTextView: TextView = view.findViewById(R.id.bioTextView)
+        val backButton: ImageView = view.findViewById(R.id.backButton)
         val followersCountTV: TextView = view.findViewById(R.id.followersCountTV)
         val followingCountTV: TextView = view.findViewById(R.id.followingCountTV)
 
@@ -83,8 +84,13 @@ class ProfileView : Fragment() {
             findNavController().navigate(R.id.action_profileView_to_followerFollowingView, b)
         }
 
+        backButton.setOnClickListener{
+            findNavController().popBackStack()
+        }
+
 
         return view
     }
+
 
 }

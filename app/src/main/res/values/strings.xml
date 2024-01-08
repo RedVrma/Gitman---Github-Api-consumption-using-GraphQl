@@ -5,4 +5,7 @@
     <string name="searchButtonDescription">Button to start search for users</string>
     <string name="profilePhotoContentDescription">Holds the profile photo of user</string>
     <string name="searchBarHint">Type Username ...</string>
+    <string name="no_users_found_text_view">No Users Found !!!</string>
+    <string name="backbuttonContentDesc">backButton</string>
+    <string name="app_title_home">Git Search</string>
 </resources>

@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -27,6 +30,8 @@ class Home : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchButton: ImageView
     private lateinit var searchBar: EditText
+    private lateinit var noUsersFoundTV: TextView
+    private lateinit var loader: ProgressBar
     private lateinit var adapterSearch: RvSearchResultAdapter
     private lateinit var usersList: List<SearchUsersQuery.AsUser>
 
@@ -45,6 +50,8 @@ class Home : Fragment() {
         recyclerView = view.findViewById(R.id.RvSearchResults)
         searchButton = view.findViewById(R.id.searchButton)
         searchBar = view.findViewById(R.id.searchBar)
+        noUsersFoundTV = view.findViewById(R.id.noUsersFoundTV)
+        loader = view.findViewById(R.id.loader)
 
         ///Adapter OnclickListener...
         adapterSearch = RvSearchResultAdapter(usersList) {
@@ -56,12 +63,18 @@ class Home : Fragment() {
         homeViewModel =
             ViewModelProvider(this, HomeViewModelFactory(repo)).get(HomeViewModel::class.java)
 
-        homeViewModel.getUsers("red", true)
-
         homeViewModel.usersList.observe(viewLifecycleOwner) {
-            if (it != null) {
+
+            if (!it.isEmpty()) {
+                noUsersFoundTV.visibility = View.GONE
+                loader.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
                 usersList = it
                 adapterSearch.updateData(it)
+            } else if(it.isEmpty() && !homeViewModel.isLoading) {
+                recyclerView.visibility = View.GONE
+                loader.visibility = View.GONE
+                noUsersFoundTV.visibility = View.VISIBLE
             }
         }
 
@@ -78,13 +91,17 @@ class Home : Fragment() {
                 val totalItemCount = layoutManager.itemCount
 
                 // Check if we need to load more data when the last item is visible
-                if (lastVisibleItemPosition == totalItemCount - 1 && !homeViewModel.isLoading.value!!) {
+                if (lastVisibleItemPosition == totalItemCount - 1 && !homeViewModel.isLoading) {
                     homeViewModel.getUsers("", false)
                 }
             }
         })
 
         searchButton.setOnClickListener {
+            loader.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+            noUsersFoundTV.visibility = View.GONE
+
             homeViewModel.getUsers(searchBar.text.toString(), true)
         }
 

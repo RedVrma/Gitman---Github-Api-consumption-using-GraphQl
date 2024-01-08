@@ -1,5 +1,6 @@
 package com.verma.gitman.viewModels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,22 +12,25 @@ class HomeViewModel(private val repo: GithubRepo) : ViewModel() {
     val usersList = MutableLiveData<List<SearchUsersQuery.AsUser>>()
     var endCursor: String? = null
     var currentQuery = ""
-    var isLoading = MutableLiveData<Boolean>()
+    var isLoading:Boolean = false
     var hasNextPage: Boolean? = true
     fun getUsers(
         q: String,
         clearPagination: Boolean,
     ) {
-        isLoading.postValue(true)
         if (clearPagination) {
             endCursor = null
             currentQuery = q
             hasNextPage = true
             usersList.postValue(emptyList())
         }
-        if (hasNextPage!!) {
+        if (hasNextPage!! && !isLoading) {
             viewModelScope.launch {
+                isLoading = true
                 val res = repo.getUsers(currentQuery, endCursor)
+                if(res.data?.search?.edges?.isEmpty() == true){
+                    isLoading = false
+                }
                 val listOfUsers =
                     res.data?.search?.edges?.mapNotNull { it?.node?.asUser } ?: emptyList()
 
@@ -35,7 +39,7 @@ class HomeViewModel(private val repo: GithubRepo) : ViewModel() {
                 updatedList.addAll(listOfUsers)
 
                 usersList.postValue(updatedList)
-                isLoading.postValue(false)
+                isLoading = false
                 ///end cursor is used for pagination
                 endCursor = res.data?.search?.pageInfo?.endCursor
                 hasNextPage = res.data?.search?.pageInfo?.hasNextPage

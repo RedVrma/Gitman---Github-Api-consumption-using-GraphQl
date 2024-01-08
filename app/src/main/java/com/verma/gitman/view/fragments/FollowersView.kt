@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -32,6 +34,8 @@ class FollowersView : Fragment() {
     lateinit var viewModel: FollowersViewModel
     private lateinit var usersList: List<GetUserFollowersQuery.Node>
     private lateinit var recyclerView: RecyclerView
+    private lateinit var loader: ProgressBar
+    private lateinit var notFoundTv: TextView
     private lateinit var adapterSearch: RvFollowerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +55,8 @@ class FollowersView : Fragment() {
         usersList = ArrayList()
 
         recyclerView = view.findViewById(R.id.RvFollowers)
+        loader = view.findViewById(R.id.loader)
+        notFoundTv = view.findViewById(R.id.notFound)
 
         ///Adapter OnclickListener...
         adapterSearch = RvFollowerAdapter(usersList) {
@@ -70,9 +76,16 @@ class FollowersView : Fragment() {
         viewModel.getUsers(receivedUsername!!)
 
         viewModel.usersList.observe(viewLifecycleOwner) {
-            if (it != null) {
+            if (!it.isEmpty()) {
+                recyclerView.visibility = View.VISIBLE
+                loader.visibility = View.GONE
+                notFoundTv.visibility = View.GONE
                 usersList = it
                 adapterSearch.updateData(it)
+            }else{
+                recyclerView.visibility = View.GONE
+                loader.visibility = View.GONE
+                notFoundTv.visibility = View.VISIBLE
             }
         }
 
