@@ -42,24 +42,24 @@ class RvSearchResultAdapter(
 ) : RecyclerView.Adapter<RvSearchResultViewHolder>() {
     fun updateData(newList: List<SearchUsersQuery.AsUser>) {
         list = newList
-        notifyDataSetChanged();
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RvSearchResultViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_github_user, parent, false)
-        return RvSearchResultViewHolder(itemView);
+        return RvSearchResultViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
-        return list.size;
+        return list.size
     }
 
     override fun onBindViewHolder(holder: RvSearchResultViewHolder, position: Int) {
         holder.bind(list[position])
 
-        holder.itemView.setOnClickListener{
-            itemClickCallback?.invoke(list[position].login);
+        holder.itemView.setOnClickListener {
+            itemClickCallback?.invoke(list[position].login)
         }
     }
 

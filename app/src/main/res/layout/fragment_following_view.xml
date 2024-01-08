@@ -5,10 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.FollowingView">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RvFollowing"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Following View" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

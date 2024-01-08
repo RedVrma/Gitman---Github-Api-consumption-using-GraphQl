@@ -2,4 +2,7 @@
     <string name="app_name">Gitman</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="searchButtonDescription">Button to start search for users</string>
+    <string name="profilePhotoContentDescription">Holds the profile photo of user</string>
+    <string name="searchBarHint">Type Username ...</string>
 </resources>

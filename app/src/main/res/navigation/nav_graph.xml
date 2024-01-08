@@ -9,7 +9,7 @@
         android:id="@+id/home2"
         android:name="com.verma.gitman.view.fragments.Home"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_home2_to_profileView"
             app:destination="@id/profileView" />
@@ -21,7 +21,7 @@
         android:id="@+id/profileView"
         android:name="com.verma.gitman.view.fragments.ProfileView"
         android:label="fragment_profile_view"
-        tools:layout="@layout/fragment_profile_view" >
+        tools:layout="@layout/fragment_profile_view">
         <action
             android:id="@+id/action_profileView_to_followerFollowingView"
             app:destination="@id/followerFollowingView" />
@@ -30,7 +30,7 @@
         android:id="@+id/followerFollowingView"
         android:name="com.verma.gitman.view.fragments.FollowerFollowingView"
         android:label="fragment_follower_following_view"
-        tools:layout="@layout/fragment_follower_following_view" >
+        tools:layout="@layout/fragment_follower_following_view">
         <action
             android:id="@+id/action_followerFollowingView_to_profileView"
             app:destination="@id/profileView" />

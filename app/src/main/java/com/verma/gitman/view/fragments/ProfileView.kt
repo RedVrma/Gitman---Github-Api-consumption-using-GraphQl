@@ -1,12 +1,12 @@
 package com.verma.gitman.view.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -52,15 +52,16 @@ class ProfileView : Fragment() {
 
         val repo = GithubRepo(githubService)
 
-        profileViewModel = ViewModelProvider(this,ProfileViewModelFactory(repo)).get(ProfileViewModel::class.java)
+        profileViewModel =
+            ViewModelProvider(this, ProfileViewModelFactory(repo)).get(ProfileViewModel::class.java)
 
         ///Fetch profile data from server
         val receivedUsername = arguments?.getString("login")
         profileViewModel.fetchProfileData(receivedUsername!!)
 
-        
-        profileViewModel.profileData.observe(viewLifecycleOwner){
-            if(it != null){
+
+        profileViewModel.profileData.observe(viewLifecycleOwner) {
+            if (it != null) {
                 val githubUser = it
 
                 Glide.with(view)
@@ -76,10 +77,10 @@ class ProfileView : Fragment() {
             }
         }
 
-        ffClickLayer.setOnClickListener{
+        ffClickLayer.setOnClickListener {
             val b = Bundle()
-            b.putString("login",receivedUsername)
-            findNavController().navigate(R.id.action_profileView_to_followerFollowingView,b)
+            b.putString("login", receivedUsername)
+            findNavController().navigate(R.id.action_profileView_to_followerFollowingView, b)
         }
 
 

@@ -1,0 +1,20 @@
+query getUserFollowing($userName: String!,$after:String){
+    repositoryOwner(login: $userName) {
+        ... on User {
+            following(first:10,after:$after){
+                totalCount
+                nodes{
+                    ... on User{
+                        avatarUrl
+                        name
+                        login
+                    }
+                }
+                pageInfo{
+                    endCursor
+                    hasNextPage
+                }
+            }
+        }
+    }
+}

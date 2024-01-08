@@ -1,13 +1,12 @@
 package com.verma.gitman.view.fragments
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,13 +28,13 @@ class Home : Fragment() {
     private lateinit var searchButton: ImageView
     private lateinit var searchBar: EditText
     private lateinit var adapterSearch: RvSearchResultAdapter
-    private lateinit var usersList:List<SearchUsersQuery.AsUser>
+    private lateinit var usersList: List<SearchUsersQuery.AsUser>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_home,container,false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         val client = ApolloClientInstance.getInstance()
         val githubService = ImGithubService(client)
@@ -48,15 +47,16 @@ class Home : Fragment() {
         searchBar = view.findViewById(R.id.searchBar)
 
         ///Adapter OnclickListener...
-        adapterSearch =  RvSearchResultAdapter(usersList){
+        adapterSearch = RvSearchResultAdapter(usersList) {
             val b = Bundle()
-            b.putString("login",it)
-            findNavController().navigate(R.id.action_home2_to_profileView,b)
+            b.putString("login", it)
+            findNavController().navigate(R.id.action_home2_to_profileView, b)
         }
 
-        homeViewModel = ViewModelProvider(this, HomeViewModelFactory(repo)).get(HomeViewModel::class.java)
+        homeViewModel =
+            ViewModelProvider(this, HomeViewModelFactory(repo)).get(HomeViewModel::class.java)
 
-        homeViewModel.getUsers("red",true)
+        homeViewModel.getUsers("red", true)
 
         homeViewModel.usersList.observe(viewLifecycleOwner) {
             if (it != null) {
@@ -79,13 +79,13 @@ class Home : Fragment() {
 
                 // Check if we need to load more data when the last item is visible
                 if (lastVisibleItemPosition == totalItemCount - 1 && !homeViewModel.isLoading.value!!) {
-                    homeViewModel.getUsers("",false)
+                    homeViewModel.getUsers("", false)
                 }
             }
         })
 
         searchButton.setOnClickListener {
-            homeViewModel.getUsers(searchBar.text.toString(),true)
+            homeViewModel.getUsers(searchBar.text.toString(), true)
         }
 
         // Inflate the layout for this fragment
